@@ -1214,11 +1214,19 @@ document.getElementById("spinBtn").addEventListener("click", startSpin);
                 document.getElementById("spinBtn").style.pointerEvents = "auto";
                 if (saBtn) saBtn.disabled = false;
               } else {
-                // Если спинов нет — показываем модалку и блокируем кнопку
+                // Если спинов нет — блокируем кнопку
                 document.getElementById("spinBtn").style.pointerEvents = "none";
                 if (saBtn) saBtn.disabled = true;
-                document.getElementById("noSpinsModal").style.display = "block";
-                document.getElementById("modalOverlay").style.display = "block";
+
+                // Если уже показывается таймерная модалка — ничего не показываем сейчас
+                const isTimerVisible = getComputedStyle(document.getElementById("modalOverlayTimer")).display !== "none";
+
+                if (!isTimerVisible) {
+                  // Если таймер не показан — сразу показываем "нет спинов"
+                  document.getElementById("noSpinsModal").style.display = "block";
+                  document.getElementById("modalOverlay").style.display = "block";
+                }
+                // Иначе — после закрытия modalOverlayTimer мы покажем noSpinsModal (см. ниже)
               }
             })
             .catch(err => {
@@ -1242,18 +1250,21 @@ document.getElementById("spinBtn").addEventListener("click", startSpin);
         document.getElementById("modalOverlayStart").style.display = "none";
       });
     }
-    if (document.getElementById("closeTimerSpins")) {
-      document.getElementById("closeTimerSpins").addEventListener("click", () => {
-        document.getElementById("modalOverlayTimer").style.display = "none";
-        document.getElementById("TimerSpinsModal").style.display = "none";
-      });
-    }
-    if (document.getElementById("closeTimerSpins2")) {
-      document.getElementById("closeTimerSpins2").addEventListener("click", () => {
-        document.getElementById("modalOverlayTimer").style.display = "none";
-        document.getElementById("TimerSpinsModal").style.display = "none";
-      });
-    }
+    ["closeTimerSpins", "closeTimerSpins2"].forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) {
+        btn.addEventListener("click", () => {
+          document.getElementById("modalOverlayTimer").style.display = "none";
+          document.getElementById("TimerSpinsModal").style.display = "none";
+
+          // Если всё ещё нельзя крутить — показываем "нет спинов"
+          if (!window.canSpin) {
+            document.getElementById("noSpinsModal").style.display = "block";
+            document.getElementById("modalOverlay").style.display = "block";
+          }
+        });
+      }
+    });
     document.getElementById("startSpinBtn").addEventListener("click", function () {
       document.getElementById("modalOverlayStart").style.display = "none";
     });
