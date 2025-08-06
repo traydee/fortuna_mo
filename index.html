@@ -322,13 +322,9 @@
         }
       })();
     </script>
-    <div class="promo-banner" style="position: absolute; top: 1px; width: 315px; height: 91.74px; display: flex; flex-direction: column; align-items:center; justify-content: center; gap: 4px; ">
+    <div class="promo-banner" style="position: absolute; top: 20px; width: 315px; height: 91.74px; display: flex; flex-direction: column; align-items:center; justify-content: center; gap: 4px; ">
     <img src="assets/images/ui/banner-title.svg" alt="WEBTOP" style="max-width: 100%; height: auto;" />
       <span style="font-family: 'Ubuntu', sans-serif; font-weight: 500; font-size: 18px; line-height: 100%; letter-spacing: 0%; text-align: center; text-transform: uppercase; color: white;">ЖМИ НА КОЛЕСО И ЗАБИРАЙ ПОДАРКИ</span>
-    </div>
-    <div class="info-box" style="position: relative; top: 33px; width: 310px; height: auto; margin: 10px auto 0 auto; display: flex; justify-content: center; align-items: center; gap: 10px; border-radius: 7px; padding: 10px 22px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.15); font-family: 'Ubuntu', sans-serif; font-size: 16px; font-weight: 500; color: white;">
-      <span style="color: #ffb14c;">ДО ЗАКРЫТИЯ:</span>
-      <span id="timerDisplay">3 дня 08:29:23</span>
     </div>
     <div id="mainContent" style="display: none;">
       <div class="wheel-wrapper">
@@ -342,8 +338,8 @@
           <img src="assets/images/icons/Autorenew.png" id="spinBtn" class="spin-layer layer3 spin-active" />
         </div>
       </div>
-      <button id="spinActionBtn" style="margin-top: 15px; width: 302px; background: #96D52B; border: none; padding: 10px 16px; color: #1F2C29; font-weight: bold; border-radius: 8px; cursor:pointer; font-family: 'Ubuntu', sans-serif; font-size: 15px;">КРУТИТЬ!</button>
-      <div class="info-box" style="position: relative; width: 310px; height: 50px; margin: 20px auto 0 auto; display: flex; flex-direction: column; gap: 10px; border-radius: 7px; padding: 8px 22px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.15);">
+      <button id="spinActionBtn" style="margin-top: 20px; width: 302px; background: #96D52B; border: none; padding: 14px 16px; color: #1F2C29; font-weight: bold; border-radius: 8px; cursor:pointer; font-family: 'Ubuntu', sans-serif; font-size: 15px;">КРУТИТЬ!</button>
+      <div class="info-box" style="position: relative; width: 310px; height: 50px; margin: 20px auto 0 auto; display: flex; flex-direction: column; gap: 10px; border-radius: 7px; padding: 12px 22px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.15);">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span style="font-size: 12px;">Бесплатное вращение через</span>
           <span id="countdownTimer" style="font-family: 'Ubuntu', sans-serif; font-weight: 400; font-size: 17px; line-height: 100%; letter-spacing: 0%; color: #96D52B; ">доступен</span>
@@ -353,7 +349,7 @@
           <span id="friendsCount" style="font-family: 'Ubuntu', sans-serif; font-weight: 400; font-size: 17px; line-height: 100%; letter-spacing: 0%; color: #96D52B;">0</span>
         </div>
       </div>
-      <div style="margin-bottom: 12px; margin-top: 10px; font-size: 13px; color: #B2B2B2">Пригласите друзей для бесплатных вращений :</div>
+      <div style="margin-bottom: 12px; margin-top: 30px; font-size: 13px; color: #B2B2B2">Пригласите друзей для бесплатных вращений :</div>
         <button id="inviteBtnMain" style="width: 355px; background: transparent;
 border: 2px solid #96D52B; padding: 10px 16px; color: #96D52B; font-weight: bold; border-radius: 8px; cursor:pointer; font-family: 'Ubuntu', sans-serif; ">Пригласить
 друзей</button>
@@ -1315,29 +1311,7 @@ document.getElementById("spinBtn").addEventListener("click", startSpin);
     //       console.error("Ошибка загрузки images_ha.json:", err);
     //     });
     // };
-    const endTime = new Date("2025-08-10T00:00:00");
-
-      function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = endTime - now;
-
-        if (distance <= 0) {
-          document.getElementById("timerDisplay").textContent = "00:00:00";
-          return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((distance / (1000 * 60)) % 60);
-        const seconds = Math.floor((distance / 1000) % 60);
-
-        document.getElementById("timerDisplay").textContent =
-          `${days} дня ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-      }
-
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-    });
+  });
   </script>
 </body>
 </html>
