@@ -322,9 +322,13 @@
         }
       })();
     </script>
-    <div class="promo-banner" style="position: absolute; top: 20px; width: 315px; height: 91.74px; display: flex; flex-direction: column; align-items:center; justify-content: center; gap: 4px; ">
+    <div class="promo-banner" style="position: absolute; top: 1px; width: 315px; height: 91.74px; display: flex; flex-direction: column; align-items:center; justify-content: center; gap: 4px; ">
     <img src="assets/images/ui/banner-title.svg" alt="WEBTOP" style="max-width: 100%; height: auto;" />
       <span style="font-family: 'Ubuntu', sans-serif; font-weight: 500; font-size: 18px; line-height: 100%; letter-spacing: 0%; text-align: center; text-transform: uppercase; color: white;">ЖМИ НА КОЛЕСО И ЗАБИРАЙ ПОДАРКИ</span>
+    </div>
+    <div class="info-box" style="position: relative; top: 33px; width: 310px; height: auto; margin: 10px auto 0 auto; display: flex; justify-content: center; align-items: center; gap: 10px; border-radius: 7px; padding: 10px 22px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.15); font-family: 'Ubuntu', sans-serif; font-size: 16px; font-weight: 500; color: white;">
+      <span style="color: #ffb14c;">ДО ЗАКРЫТИЯ:</span>
+      <span id="timerDisplay">3 дня 08:29:23</span>
     </div>
     <div id="mainContent" style="display: none;">
       <div class="wheel-wrapper">
@@ -338,8 +342,8 @@
           <img src="assets/images/icons/Autorenew.png" id="spinBtn" class="spin-layer layer3 spin-active" />
         </div>
       </div>
-      <button id="spinActionBtn" style="margin-top: 20px; width: 302px; background: #96D52B; border: none; padding: 14px 16px; color: #1F2C29; font-weight: bold; border-radius: 8px; cursor:pointer; font-family: 'Ubuntu', sans-serif; font-size: 15px;">КРУТИТЬ!</button>
-      <div class="info-box" style="position: relative; width: 310px; height: 50px; margin: 20px auto 0 auto; display: flex; flex-direction: column; gap: 10px; border-radius: 7px; padding: 12px 22px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.15);">
+      <button id="spinActionBtn" style="margin-top: 15px; width: 302px; background: #96D52B; border: none; padding: 10px 16px; color: #1F2C29; font-weight: bold; border-radius: 8px; cursor:pointer; font-family: 'Ubuntu', sans-serif; font-size: 15px;">КРУТИТЬ!</button>
+      <div class="info-box" style="position: relative; width: 310px; height: 50px; margin: 20px auto 0 auto; display: flex; flex-direction: column; gap: 10px; border-radius: 7px; padding: 8px 22px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.15);">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span style="font-size: 12px;">Бесплатное вращение через</span>
           <span id="countdownTimer" style="font-family: 'Ubuntu', sans-serif; font-weight: 400; font-size: 17px; line-height: 100%; letter-spacing: 0%; color: #96D52B; ">доступен</span>
@@ -349,7 +353,7 @@
           <span id="friendsCount" style="font-family: 'Ubuntu', sans-serif; font-weight: 400; font-size: 17px; line-height: 100%; letter-spacing: 0%; color: #96D52B;">0</span>
         </div>
       </div>
-      <div style="margin-bottom: 12px; margin-top: 30px; font-size: 13px; color: #B2B2B2">Пригласите друзей для бесплатных вращений :</div>
+      <div style="margin-bottom: 12px; margin-top: 10px; font-size: 13px; color: #B2B2B2">Пригласите друзей для бесплатных вращений :</div>
         <button id="inviteBtnMain" style="width: 355px; background: transparent;
 border: 2px solid #96D52B; padding: 10px 16px; color: #96D52B; font-weight: bold; border-radius: 8px; cursor:pointer; font-family: 'Ubuntu', sans-serif; ">Пригласить
 друзей</button>
@@ -372,23 +376,6 @@ border: 2px solid #96D52B; padding: 10px 16px; color: #96D52B; font-weight: bold
       <div style="background: #445052; border-radius: 6px; padding: 6px 0; font-size: 12px; color: #ccc; margin-top: 14px;">
         До следующего спина
         <div id="modalCountdownTimer" style="font-family: 'Ubuntu', sans-serif; font-size: 20px; font-weight: bold; color: #96D52B; margin-top: 4px;">--:--:--</div>
-      </div>
-      <button id="inviteBtnModal" style="width: 260px; margin-top:14px; background: transparent; border: 2px solid #96D52B; padding: 10px 16px; color: #96D52B; font-weight: bold; border-radius: 8px; cursor:pointer; font-family: 'Ubuntu', sans-serif;">Пригласить друзей</button>
-    </div>
-  </div>
-  <div id="toast" style="opacity:0; transition: opacity 0.5s ease; position:fixed; top:20px; left:50%; transform:translateX(-50%); background: rgba(79, 79, 79, 0.9); color:#fff; padding:8px 16px; border-radius:8px; font-size:14px; font-family:'Ubuntu', sans-serif; z-index:10001;">
-        Ссылка скопирована
-  </div>
-    <!-- Модальное окно "таймер" с затемняющим фоном -->
-  <div id="modalOverlayTimer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.6); z-index:9998;">
-    <div id="noSpinsModal" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#1F2C29; color:white; padding:20px 30px; border-radius:12px; z-index:10000; text-align:center; font-family:'Ubuntu', sans-serif; width:260px; box-shadow: 0 0 30px 2px rgba(154, 255, 160, 0.3);">
-      <img id="closeNoSpins" src="assets/images/icons/close.png" alt="Закрыть" style="position: absolute; top: 10px; right: 14px; width: 18px; height: 18px; cursor: pointer;" />
-      <div style="font-family: 'Ubuntu', sans-serif; font-size: 18px; font-weight: bold; color: #DAFF9C; margin-bottom: 10px;">Упс... Спины закончились(</div>
-              <img src="assets/images/ui/box.svg" alt="box" style="width: 50px; margin: 14px auto;" />
-      <div style="font-family: 'Ubuntu', sans-serif; font-size: 13px; color: white; margin: 12px 0;">Подожди некоторое время или пригласи друзей!</div>
-      <div style="background: #445052; border-radius: 6px; padding: 6px 0; font-size: 12px; color: #ccc; margin-top: 14px;">
-        До следующего спина
-        <div id="timerDisplay" style="font-family: 'Ubuntu', sans-serif; font-size: 20px; font-weight: bold; color: #96D52B; margin-top: 4px;">--:--:--</div>
       </div>
       <button id="inviteBtnModal" style="width: 260px; margin-top:14px; background: transparent; border: 2px solid #96D52B; padding: 10px 16px; color: #96D52B; font-weight: bold; border-radius: 8px; cursor:pointer; font-family: 'Ubuntu', sans-serif;">Пригласить друзей</button>
     </div>
@@ -1350,7 +1337,7 @@ document.getElementById("spinBtn").addEventListener("click", startSpin);
 
       updateCountdown();
       setInterval(updateCountdown, 1000);
-  });
+    });
   </script>
 </body>
 </html>
