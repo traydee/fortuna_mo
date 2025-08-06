@@ -326,12 +326,12 @@
     <img src="assets/images/ui/banner-title.svg" alt="WEBTOP" style="max-width: 100%; height: auto;" />
       <span style="font-family: 'Ubuntu', sans-serif; font-weight: 500; font-size: 18px; line-height: 100%; letter-spacing: 0%; text-align: center; text-transform: uppercase; color: white;">ЖМИ НА КОЛЕСО И ЗАБИРАЙ ПОДАРКИ</span>
     </div>
-    <div class="info-box" style="position: relative; width: 280px; height: 50px; margin: 20px auto 0 auto; display: flex; flex-direction: column; gap: 10px; border-radius: 7px; padding: 12px 22px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.15);">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-size: 12px;">Бесплатное вращение через</span>
-        <span id="countdownTimer" style="font-family: 'Ubuntu', sans-serif; font-weight: 400; font-size: 17px; line-height: 100%; letter-spacing: 0%; color: #96D52B; ">доступен</span>
-      </div>
-    </div>
+    <div class="info-box" style="position: relative; width: 280px; height: 60px; margin: 20px auto 0 auto; display: flex; justify-content: center; align-items: center; gap: 10px; border-radius: 7px; padding: 12px 22px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.15);">
+  <span style="font-family: 'Ubuntu', sans-serif; font-size: 14px; font-weight: 400; color: #ffb14c;">
+    ДО ОКОНЧАНИЯ
+  </span>
+  <span id="timerDisplay" style="font-family: 'Ubuntu', sans-serif; font-size: 20px; font-weight: 500; color: white;"></span>
+</div>
     <div id="mainContent" style="display: none;">
       <div class="wheel-wrapper">
         <div class="canvas-holder">
@@ -1317,7 +1317,33 @@ document.getElementById("spinBtn").addEventListener("click", startSpin);
     //       console.error("Ошибка загрузки images_ha.json:", err);
     //     });
     // };
-  });
+    const endTime = new Date();
+    endTime.setDate(endTime.getDate() + 2);  // +2 дня
+    endTime.setHours(endTime.getHours() + 12);
+    endTime.setMinutes(endTime.getMinutes() + 34);
+    endTime.setSeconds(endTime.getSeconds() + 32);
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = endTime - now;
+
+      if (distance <= 0) {
+        document.getElementById("timerDisplay").textContent = "00:00:00";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      document.getElementById("timerDisplay").textContent =
+        `${days} дня ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    });
   </script>
 </body>
 </html>
