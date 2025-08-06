@@ -326,7 +326,28 @@
     <img src="assets/images/ui/banner-title.svg" alt="WEBTOP" style="max-width: 100%; height: auto;" />
       <span style="font-family: 'Ubuntu', sans-serif; font-weight: 500; font-size: 18px; line-height: 100%; letter-spacing: 0%; text-align: center; text-transform: uppercase; color: white;">ЖМИ НА КОЛЕСО И ЗАБИРАЙ ПОДАРКИ</span>
     </div>
-    <div class="info-box" style="position: relative; margin-top: 18px; width: 310px; height: auto; margin: 10px auto 0 auto; display: flex; justify-content: center; align-items: center; gap: 10px; border-radius: 7px; padding: 10px 22px; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.15); font-family: 'Ubuntu', sans-serif; font-size: 16px; font-weight: 500; color: white;">
+    <div class="info-box" style="
+      position: absolute;   /* ВАЖНО */
+      top: 18px;            /* Смещаем вниз */
+      left: 0;
+      right: 0;
+      margin: 0 auto;       /* Центруем по горизонтали */
+      width: 310px;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border-radius: 7px;
+      padding: 10px 22px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: white;
+    ">
       <span style="color: #ffb14c;">ДО ОКОНЧАНИЯ</span>
       <span id="timerDisplay">3 дня 08:29:23</span>
     </div>
