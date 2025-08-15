@@ -22,6 +22,13 @@ const radius = 170;
 
 const loadedImages = {};
 
+let currentRotation = 0;
+
+// --- Глобальный флаг доступности вращения ---
+window.canSpin = false;
+
+const spinDuration = 4; // seconds
+
 function loadImages(callback) {
   let loadedCount = 0;
   prizes.forEach((p, i) => {
@@ -122,12 +129,6 @@ function drawWheel() {
   }
 }
 
-let currentRotation = 0;
-
-// --- Глобальный флаг доступности вращения ---
-window.canSpin = false;
-
-const spinDuration = 4; // seconds
 function startSpin() {
   // Проверка, можно ли крутить в данный момент
   if (!window.canSpin) {
@@ -523,11 +524,7 @@ function startSpin() {
                 .catch(err => {
                   console.error("Ошибка загрузки images_ha.json:", err);
                 });
-            }
-
-
-
-            else if (prizeLabel === "Chaturbate") {
+            }else if (prizeLabel === "Chaturbate") {
               // Общий блок для определения pool, selected и isSuperPrize
               const key = prizeLabel.toLowerCase(); // "chaturbate"
               const source = data[key];
@@ -753,32 +750,21 @@ function startSpin() {
       }, spinDuration * 1000 + 10);
     });
 }
+
 document.getElementById("spinBtn").addEventListener("click", startSpin);
-// --- Функция для открытия Telegram чата и вставки текста для получения приза ---
 function openPrizeChat() {
-  // Исходный текст сообщения
   const rawText = 'Хочу забрать свой приз. Вот скриншот:';
-
-  // HTTP-ссылка, корректно открывающая чат внутри Telegram-клиента
-  // Telegram сам обработает кодирование, поэтому передаём текст как есть
   const url = `https://t.me/rollcammm?text=${rawText}`;
-
-  // Пытаемся открыть чат через API Telegram Web Apps
   if (window.Telegram?.WebApp?.openTelegramLink) {
     try {
-      window.Telegram.WebApp.openTelegramLink(url); // закроет WebApp и откроет чат
-      return; // если всё ок – выходим
+      window.Telegram.WebApp.openTelegramLink(url);
+      return;
     } catch (err) {
       console.error('openTelegramLink error:', err);
-      // пойдём в фолбэк ниже
     }
   }
-
-  // Фолбэк: открываем во внешнем браузере (или если работаем не из Telegram)
   window.open(url, '_blank');
 }
-
-// NOTE: closeResult event is now attached dynamically after resultContent.innerHTML is set.
 
 loadImages(drawWheel);
 
@@ -796,7 +782,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("startModal").style.display = "flex";
   }
 });
-
 
 window.addEventListener("DOMContentLoaded", () => {
   if (window.subscriptionRequired) return;
@@ -850,15 +835,12 @@ window.addEventListener("DOMContentLoaded", () => {
       .then(text => {
         const countdownSpan = document.getElementById("countdownTimer");
 
-        // Всегда обнуляем состояние
         window.canSpin = false;
         window.wasSpinGrantedByFreespin = false;
 
-        // Если "Too Soon|"
         if (text.startsWith("Too Soon|")) {
           const millisLeft = parseInt(text.split("|")[1], 10);
 
-          // ⏱ Запускаем таймер
           function startCountdown(msLeft) {
             function updateTimer(ms) {
               const totalSeconds = Math.floor(ms / 1000);
@@ -887,7 +869,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
           startCountdown(millisLeft);
         } else {
-          // если OK, пишем "доступен"
           document.getElementById("countdownTimer").textContent = "доступен";
           window.canSpin = true;
         }
