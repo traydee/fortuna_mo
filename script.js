@@ -908,7 +908,7 @@ window.addEventListener("DOMContentLoaded", () => {
           loader.style.display = "none";
           mainContent.style.display = "block";
           document.getElementById("resultOverlay").style.display = "none";
-          document.getElementById("modalOverlayTimer").style.display = "block";
+          // document.getElementById("modalOverlayTimer").style.display = "block";
 
           const saBtn = document.getElementById("spinActionBtn");
 
@@ -923,7 +923,7 @@ window.addEventListener("DOMContentLoaded", () => {
             if (saBtn) saBtn.disabled = true;
 
             // Если уже показывается таймерная модалка — ничего не показываем сейчас
-            const isTimerVisible = getComputedStyle(document.getElementById("modalOverlayTimer")).display !== "none";
+            // const isTimerVisible = getComputedStyle(document.getElementById("modalOverlayTimer")).display !== "none";
 
             if (!isTimerVisible) {
               // Если таймер не показан — сразу показываем "нет спинов"
@@ -958,7 +958,7 @@ if (document.getElementById("closeYesSpin")) {
   const btn = document.getElementById(id);
   if (btn) {
     btn.addEventListener("click", () => {
-      document.getElementById("modalOverlayTimer").style.display = "none";
+      // document.getElementById("modalOverlayTimer").style.display = "none";
       document.getElementById("TimerSpinsModal").style.display = "none";
 
       // Если всё ещё нельзя крутить — показываем "нет спинов"
