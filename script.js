@@ -940,7 +940,7 @@ if (document.getElementById("closeYesSpin")) {
   if (btn) {
     btn.addEventListener("click", () => {
       // document.getElementById("modalOverlayTimer").style.display = "none";
-      document.getElementById("TimerSpinsModal").style.display = "none";
+      // document.getElementById("TimerSpinsModal").style.display = "none";
 
       // Если всё ещё нельзя крутить — показываем "нет спинов"
       if (!window.canSpin) {
