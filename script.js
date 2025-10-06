@@ -54,13 +54,11 @@ const prizes = [
   { label: "Joke", image: "assets/images/ui/1.png" },
   { label: "Chaturbate", image: "assets/images/ui/2.svg" },
   { label: "Joke", image: "assets/images/ui/1.png" },
-  { label: "DMCA Protected", image: "assets/images/prizes/rabbit_prize.png" },
-  { label: "Joke", image: "assets/images/ui/1.png" },
+  { label: "WR", image: "assets/images/ui/4.png" },
   { label: "Stripchat", image: "assets/images/ui/3.svg" },
   { label: "Joke", image: "assets/images/ui/1.png" },
-  { label: "Joke", image: "assets/images/ui/1.png" },
   { label: "Chaturbate", image: "assets/images/ui/2.svg" },
-  { label: "DMCA Protected", image: "assets/images/prizes/rabbit_prize.png" },
+  { label: "WR", image: "assets/images/ui/4.png" },
   { label: "Joke", image: "assets/images/ui/1.png" }
 ];
 
@@ -150,8 +148,6 @@ function drawWheel() {
           zoom *= 1;
         } else if (prizes[i].label === "Chaturbate") {
           zoom *= 0.7;
-        } else if (prizes[i].label === "DMCA Protected") {
-          zoom *= 0.47;
         }
         ctx.scale(zoom, zoom);
         let offsetX = 0;
@@ -161,14 +157,8 @@ function drawWheel() {
           offsetX = radius * 0.5;
         } else if (prizes[i].label === "Chaturbate") {
           offsetX = radius * 0.8;
-        } else if (prizes[i].label === "DMCA Protected") {
-          offsetX = radius * 1.25;
         }
         ctx.translate(offsetX, 0);
-        // Поворачиваем кролика на 90 градусов после позиционирования
-        if (prizes[i].label === "DMCA Protected") {
-          ctx.rotate(Math.PI / 2);
-        }
         ctx.drawImage(img, -finalWidth / 2, -finalHeight / 2, finalWidth, finalHeight);
     } else {
       ctx.fillStyle = "white";
@@ -227,12 +217,11 @@ function startSpin() {
       const anglePerSector = (2 * Math.PI) / prizes.length;
 
   // 🎯 Теория вероятностей выпадения категорий:
-  // 60% — Joke, 20% — DMCA, 10% — Stripchat, 10% — Chaturbate
+  // 60% — Joke, 10% — Stripchat, 10% — Chaturbate
   // Выбираем категорию с заданной вероятностью
   const rand = Math.random();
   let targetLabel = "";
-  if (rand < 0.6) targetLabel = "Joke";
-  else if (rand < 0.8) targetLabel = "DMCA Protected";
+  if (rand < 0.8) targetLabel = "Joke";
   else if (rand < 0.9) targetLabel = "Stripchat";
   else targetLabel = "Chaturbate";
 
@@ -273,8 +262,8 @@ function startSpin() {
             if (prizeLabel === "Joke") {
               const jokes = data.joke;
               finalText = jokes[Math.floor(Math.random() * jokes.length)];
-            } else if (prizeLabel === "Stripchat" || prizeLabel === "Chaturbate" || prizeLabel === "DMCA Protected") {
-              const key = prizeLabel.toLowerCase(); // "stripchat", "chaturbate" или "dmca protected"
+            } else if (prizeLabel === "Stripchat" || prizeLabel === "Chaturbate") {
+              const key = prizeLabel.toLowerCase(); // "stripchat", "chaturbate"
               const source = data[key];
               const prizeRand = Math.random();
               const pool = prizeRand < 0.9 ? source.prize : source.superprize;
@@ -463,119 +452,7 @@ function startSpin() {
                 });
             }
 
-            else if (prizeLabel === "DMCA Protected") {
-              // Определяем pool и isSuperPrize
-              const key = prizeLabel.toLowerCase();
-              const source = data[key];
-              // У DMCA Protected только обычные призы, нет superprize
-              const selected = source.prize[Math.floor(Math.random() * source.prize.length)];
-              finalText = `${prizeLabel}: ${selected}`;
-              const prizeTypeText = "★ PRIZE ★";
-              resultHTML = `
-                <img id="closeResult" src="assets/images/icons/close.png" alt="Закрыть" style="position: absolute; top: 10px; right: 14px; width: 18px; height: 18px; cursor: pointer;" />
-                <div style="font-family: 'Ubuntu', sans-serif; font-size: 18px; font-weight: bold; color: #DAFF9C; margin-bottom: 10px;">Вау! Ваш приз это....</div>
-                <img src="assets/images/prizes/rabbit_prize.png" alt="DMCA Protected" style="width: 60px; transform: scale(1.2); margin: 12px auto; display: block;" />
-                <img id="giftImg" src="" alt="gift" style="width: 248px; margin: 10px auto; border-radius: 12px;" />
-                <div style="font-family: 'Ubuntu', sans-serif; font-size: 10px; font-weight: 400; color: white; margin: 12px 0;">${finalText.toUpperCase()}</div>
-                <div style="font-family: 'Ubuntu', sans-serif; font-size: 16px; font-weight: bold; color: #96D52B; margin-top: 10px;">${prizeTypeText}</div>
-                <div style="background: rgba(255,255,255,0.08); padding: 14px; margin-top: 16px; border-radius: 10px;">
-                  <div style="font-family: 'Ubuntu', sans-serif; font-size: 15px; font-weight: bold; color: white; margin-bottom: 6px;">Сделайте скриншот приза</div>
-                  <div style="font-family: 'Ubuntu', sans-serif; font-size: 12px; color: #ccc;">Для получения приза, сделайте скриншот и отправьте в чат, нажав на кнопку внизу<br>* Призом нужно воспользоваться в течение 7 дней</div>
-                </div>
-                <button id="prizeBtn" style="width: 100%; background: #96D52B; border: none; padding: 12px; color: #1F2C29; font-weight: bold; border-radius: 8px; margin-top: 12px; cursor: pointer; font-family: 'Ubuntu', sans-serif; font-size: 16px;">Забрать приз</button>
-              `;
-              fetch("images_pr.json")
-                .then(res => res.json())
-                .then(images => {
-                  const randomImage = images[Math.floor(Math.random() * images.length)];
-                  // Используем временный контейнер и onload для #giftImg
-                  const tempContainer = document.createElement("div");
-                  tempContainer.innerHTML = resultHTML;
-                  const waitForGiftImg = tempContainer.querySelector('#giftImg');
-                  if (waitForGiftImg) {
-                    waitForGiftImg.onload = () => {
-                      resultContent.innerHTML = tempContainer.innerHTML;
-                      // Скрыть #closeResult сразу после вставки innerHTML
-                      const closeResultImg = document.getElementById("resultContent").querySelector('#closeResult');
-                      if (closeResultImg) {
-                        closeResultImg.style.display = "none";
-                      }
-                      // --- Добавляем обработчик на кнопку #prizeBtn после вставки innerHTML ---
-                      const prizeBtn = document.getElementById("prizeBtn");
-                      if (prizeBtn) {
-                        prizeBtn.addEventListener("click", openPrizeChat);
-                      }
-                      // --- Конфетти для Stripchat и Chaturbate ---
-                      const confettiCanvas = document.createElement("canvas");
-                      confettiCanvas.style.position = "fixed";
-                      confettiCanvas.style.top = 0;
-                      confettiCanvas.style.left = 0;
-                      confettiCanvas.style.width = "100vw";
-                      confettiCanvas.style.height = "100vh";
-                      confettiCanvas.style.pointerEvents = "none";
-                      confettiCanvas.style.zIndex = 99999;
-                      document.body.appendChild(confettiCanvas);
-
-                      const script = document.createElement("script");
-                      script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
-                      script.onload = () => {
-                        const myConfetti = window.confetti.create(confettiCanvas, { resize: true });
-                        myConfetti({
-                          particleCount: 200,
-                          spread: 100,
-                          origin: { y: 0.6 },
-                          startVelocity: 30,
-                          gravity: 0.8,
-                          ticks: 200
-                        });
-
-                        setTimeout(() => {
-                          confettiCanvas.style.pointerEvents = "none";
-                          confettiCanvas.style.display = "none";
-                          confettiCanvas.remove();
-                        }, 6000);
-                      };
-                      document.body.appendChild(script);
-                      // --- конец конфетти ---
-                      document.getElementById("resultOverlay").style.display = "block";
-                      resultFrame.style.display = "block";
-                      resultFrame.style.background = "#1F2C29";
-                      resultFrame.style.color = "white";
-                      // Назначаем обработчик закрытия после вставки innerHTML через setTimeout
-                      setTimeout(() => {
-                        const closeResultImg = document.getElementById("resultContent").querySelector('#closeResult');
-                        if (closeResultImg) {
-                          closeResultImg.style.display = "block";
-                          closeResultImg.addEventListener("click", () => {
-                            document.getElementById("resultOverlay").style.display = "none";
-                            document.getElementById("resultText").style.display = "none";
-                            location.reload(); // обновить страницу
-                          });
-                        }
-                      }, 3000);
-                    };
-                    waitForGiftImg.src = randomImage;
-                  } else {
-                    resultContent.innerHTML = tempContainer.innerHTML;
-                    document.getElementById("resultOverlay").style.display = "block";
-                    resultFrame.style.display = "block";
-                    resultFrame.style.background = "#1F2C29";
-                    resultFrame.style.color = "white";
-                    // Назначаем обработчик закрытия после вставки innerHTML
-                    const closeResultImg = document.getElementById("resultContent").querySelector('#closeResult');
-                    if (closeResultImg) {
-                      closeResultImg.addEventListener("click", () => {
-                        document.getElementById("resultOverlay").style.display = "none";
-                        document.getElementById("resultText").style.display = "none";
-                        location.reload(); // обновить страницу
-                      });
-                    }
-                  }
-                })
-                .catch(err => {
-                  console.error("Ошибка загрузки images_ha.json:", err);
-                });
-            }else if (prizeLabel === "Chaturbate") {
+            else if (prizeLabel === "Chaturbate") {
               // Общий блок для определения pool, selected и isSuperPrize
               const key = prizeLabel.toLowerCase(); // "chaturbate"
               const source = data[key];
@@ -667,6 +544,69 @@ function startSpin() {
                           });
                         }
                       }, 3000);
+                    };
+                    waitForGiftImg.src = randomImage;
+                  } else {
+                    resultContent.innerHTML = tempContainer.innerHTML;
+                    document.getElementById("resultOverlay").style.display = "block";
+                    resultFrame.style.display = "block";
+                    resultFrame.style.background = "#1F2C29";
+                    resultFrame.style.color = "white";
+                    // Назначаем обработчик закрытия после вставки innerHTML
+                    const closeResultImg = document.getElementById("resultContent").querySelector('#closeResult');
+                    if (closeResultImg) {
+                      closeResultImg.addEventListener("click", () => {
+                        document.getElementById("resultOverlay").style.display = "none";
+                        document.getElementById("resultText").style.display = "none";
+                        location.reload(); // обновить страницу
+                      });
+                    }
+                  }
+                })
+                .catch(err => {
+                  console.error("Ошибка загрузки images_ha.json:", err);
+                });
+            }
+
+            else if (prizeLabel === "WR") {
+              resultHTML = `
+                <img id="closeResult" src="assets/images/icons/close.png" alt="Закрыть" style="position: absolute; top: 10px; right: 14px; width: 18px; height: 18px; cursor: pointer;" />
+                <div style="font-family: 'Ubuntu', sans-serif; font-size: 18px; font-weight: bold; color: #DAFF9C; margin-bottom: 10px;">Вау! Ваш приз это....</div>
+                <img id="giftImg" src="" alt="gift" style="width: 248px; margin: 10px auto; border-radius: 12px;" />
+                <div style="font-family: 'Ubuntu', sans-serif; font-size: 10px; font-weight: 400; color: white; margin: 12px 0;">Бесплатный вывод токенов через обменник</div>
+                <div style="font-family: 'Ubuntu', sans-serif; font-size: 16px; color: #96D52B; font-weight: bold;">ХАХАШКА</div>
+              `;
+
+              // Загружаем случайную картинку для "Joke"
+              fetch("images_ha.json")
+                .then(res => res.json())
+                .then(images => {
+                  const randomImage = images[Math.floor(Math.random() * images.length)];
+                  // Используем временный контейнер и onload для #giftImg
+                  const tempContainer = document.createElement("div");
+                  tempContainer.innerHTML = resultHTML;
+                  const waitForGiftImg = tempContainer.querySelector('#giftImg');
+                  if (waitForGiftImg) {
+                    waitForGiftImg.onload = () => {
+                      resultContent.innerHTML = tempContainer.innerHTML;
+                      const closeResultImg = document.getElementById("resultContent").querySelector('#closeResult');
+                      if (closeResultImg) {
+                        closeResultImg.style.display = "none";
+                      }
+                      document.getElementById("resultOverlay").style.display = "block";
+                      resultFrame.style.display = "block";
+                      resultFrame.style.background = "#1F2C29";
+                      resultFrame.style.color = "white";
+                      if (closeResultImg) {
+                        setTimeout(() => {
+                          closeResultImg.style.display = "block";
+                        }, 3000);
+                        closeResultImg.addEventListener("click", () => {
+                          document.getElementById("resultOverlay").style.display = "none";
+                          document.getElementById("resultText").style.display = "none";
+                          location.reload();
+                        });
+                      }
                     };
                     waitForGiftImg.src = randomImage;
                   } else {
@@ -957,11 +897,13 @@ window.addEventListener("DOMContentLoaded", () => {
             // Если уже показывается таймерная модалка — ничего не показываем сейчас
             // const isTimerVisible = getComputedStyle(document.getElementById("modalOverlayTimer")).display !== "none";
 
-            if (!isTimerVisible) {
-              // Если таймер не показан — сразу показываем "нет спинов"
-              document.getElementById("noSpinsModal").style.display = "block";
-              document.getElementById("modalOverlay").style.display = "block";
-            }
+            // if (!isTimerVisible) {
+            //   // Если таймер не показан — сразу показываем "нет спинов"
+            //   document.getElementById("noSpinsModal").style.display = "block";
+            //   document.getElementById("modalOverlay").style.display = "block";
+            // }
+            document.getElementById("noSpinsModal").style.display = "block";
+            document.getElementById("modalOverlay").style.display = "block";
             // Иначе — после закрытия modalOverlayTimer мы покажем noSpinsModal (см. ниже)
           }
         })
