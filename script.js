@@ -223,11 +223,13 @@ function startSpin() {
   // 🎯 Теория вероятностей выпадения категорий:
   // 60% — Joke, 10% — Stripchat, 10% — Chaturbate
   // Выбираем категорию с заданной вероятностью
-  const rand = Math.random();
+  const rand = Math.random(); // 0..1
   let targetLabel = "";
-  if (rand < 0.8) targetLabel = "Joke";
-  else if (rand < 0.9) targetLabel = "Stripchat";
-  else targetLabel = "Chaturbate";
+
+  if (rand < 0.3) targetLabel = "Joke";          // 0 – 0.3  (30%)
+  else if (rand < 0.6) targetLabel = "WR";       // 0.3 – 0.6 (30%)
+  else if (rand < 0.8) targetLabel = "Stripchat"; // 0.6 – 0.8 (20%)
+  else targetLabel = "Chaturbate";               // 0.8 – 1   (20%)
 
       // Собираем индексы всех секторов с нужной категорией
       const matchingIndexes = prizes
