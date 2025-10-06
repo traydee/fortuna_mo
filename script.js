@@ -579,8 +579,13 @@ function startSpin() {
                 <img id="closeResult" src="assets/images/icons/close.png" alt="Закрыть" style="position: absolute; top: 10px; right: 14px; width: 18px; height: 18px; cursor: pointer;" />
                 <div style="font-family: 'Ubuntu', sans-serif; font-size: 18px; font-weight: bold; color: #DAFF9C; margin-bottom: 10px;">Вау! Ваш приз это....</div>
                 <img id="giftImg" src="" alt="gift" style="width: 248px; margin: 10px auto; border-radius: 12px;" />
-                <div style="font-family: 'Ubuntu', sans-serif; font-size: 10px; font-weight: 400; color: white; margin: 12px 0;">Бесплатный вывод токенов через обменник</div>              `;
-
+                <div style="font-family: 'Ubuntu', sans-serif; font-size: 10px; font-weight: 400; color: white; margin: 12px 0;">Бесплатный вывод токенов через обменник</div>              
+                <div style="background: rgba(255,255,255,0.08); padding: 14px; margin-top: 16px; border-radius: 10px;">
+                  <div style="font-family: 'Ubuntu', sans-serif; font-size: 15px; font-weight: bold; color: white; margin-bottom: 6px;">Сделайте скриншот приза</div>
+                  <div style="font-family: 'Ubuntu', sans-serif; font-size: 12px; color: #ccc;">Для получения приза, сделайте скриншот и отправьте в чат, нажав на кнопку внизу<br>* Призом нужно воспользоваться в течение 7 дней</div>
+                </div>
+                <button id="prizeBtn" style="width: 100%; background: #96D52B; border: none; padding: 12px; color: #1F2C29; font-weight: bold; border-radius: 8px; margin-top: 12px; cursor: pointer; font-family: 'Ubuntu', sans-serif; font-size: 16px;">Забрать приз</button>
+              `;
               // Загружаем случайную картинку для "Joke"
               fetch("images_wr.json")
                 .then(res => res.json())
