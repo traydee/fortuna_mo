@@ -598,24 +598,64 @@ function startSpin() {
                   if (waitForGiftImg) {
                     waitForGiftImg.onload = () => {
                       resultContent.innerHTML = tempContainer.innerHTML;
+                      // Скрыть #closeResult сразу после вставки innerHTML
                       const closeResultImg = document.getElementById("resultContent").querySelector('#closeResult');
                       if (closeResultImg) {
                         closeResultImg.style.display = "none";
                       }
+                      // --- Добавляем обработчик на кнопку #prizeBtn после вставки innerHTML ---
+                      const prizeBtn = document.getElementById("prizeBtn");
+                      if (prizeBtn) {
+                        prizeBtn.addEventListener("click", openPrizeChat);
+                      }
+                      // --- Конфетти для Stripchat и Chaturbate ---
+                      const confettiCanvas = document.createElement("canvas");
+                      confettiCanvas.style.position = "fixed";
+                      confettiCanvas.style.top = 0;
+                      confettiCanvas.style.left = 0;
+                      confettiCanvas.style.width = "100vw";
+                      confettiCanvas.style.height = "100vh";
+                      confettiCanvas.style.pointerEvents = "none";
+                      confettiCanvas.style.zIndex = 99999;
+                      document.body.appendChild(confettiCanvas);
+
+                      const script = document.createElement("script");
+                      script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
+                      script.onload = () => {
+                        const myConfetti = window.confetti.create(confettiCanvas, { resize: true });
+                        myConfetti({
+                          particleCount: 200,
+                          spread: 100,
+                          origin: { y: 0.6 },
+                          startVelocity: 30,
+                          gravity: 0.8,
+                          ticks: 200
+                        });
+
+                        setTimeout(() => {
+                          confettiCanvas.style.pointerEvents = "none";
+                          confettiCanvas.style.display = "none";
+                          confettiCanvas.remove();
+                        }, 6000);
+                      };
+                      document.body.appendChild(script);
+                      // --- конец конфетти ---
                       document.getElementById("resultOverlay").style.display = "block";
                       resultFrame.style.display = "block";
                       resultFrame.style.background = "#1F2C29";
                       resultFrame.style.color = "white";
-                      if (closeResultImg) {
-                        setTimeout(() => {
+                      // Новое: показать кнопку закрытия через 3 секунды
+                      setTimeout(() => {
+                        const closeResultImg = document.getElementById("resultContent").querySelector('#closeResult');
+                        if (closeResultImg) {
                           closeResultImg.style.display = "block";
-                        }, 3000);
-                        closeResultImg.addEventListener("click", () => {
-                          document.getElementById("resultOverlay").style.display = "none";
-                          document.getElementById("resultText").style.display = "none";
-                          location.reload();
-                        });
-                      }
+                          closeResultImg.addEventListener("click", () => {
+                            document.getElementById("resultOverlay").style.display = "none";
+                            document.getElementById("resultText").style.display = "none";
+                            location.reload(); // обновить страницу
+                          });
+                        }
+                      }, 3000);
                     };
                     waitForGiftImg.src = randomImage;
                   } else {
