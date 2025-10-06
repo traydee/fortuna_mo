@@ -148,6 +148,8 @@ function drawWheel() {
           zoom *= 1;
         } else if (prizes[i].label === "Chaturbate") {
           zoom *= 0.7;
+        } else if (prizes[i].label === "WR") {
+          zoom *= 0.6;
         }
         ctx.scale(zoom, zoom);
         let offsetX = 0;
@@ -157,6 +159,8 @@ function drawWheel() {
           offsetX = radius * 0.5;
         } else if (prizes[i].label === "Chaturbate") {
           offsetX = radius * 0.8;
+        } else if (prizes[i].label === "WR") {
+          offsetX = radius * 1.1;
         }
         ctx.translate(offsetX, 0);
         ctx.drawImage(img, -finalWidth / 2, -finalHeight / 2, finalWidth, finalHeight);
