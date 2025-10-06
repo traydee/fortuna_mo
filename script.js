@@ -578,63 +578,9 @@ function startSpin() {
               resultHTML = `
                 <img id="closeResult" src="assets/images/icons/close.png" alt="Закрыть" style="position: absolute; top: 10px; right: 14px; width: 18px; height: 18px; cursor: pointer;" />
                 <div style="font-family: 'Ubuntu', sans-serif; font-size: 18px; font-weight: bold; color: #DAFF9C; margin-bottom: 10px;">Вау! Ваш приз это....</div>
-                <img id="giftImg" src="" alt="gift" style="width: 248px; margin: 10px auto; border-radius: 12px;" />
+                <img id="giftImg" src="assets/images/ui/WRex.png" alt="gift" style="width: 248px; margin: 10px auto; border-radius: 12px;" />
                 <div style="font-family: 'Ubuntu', sans-serif; font-size: 10px; font-weight: 400; color: white; margin: 12px 0;">Бесплатный вывод токенов через обменник</div>
-                <div style="font-family: 'Ubuntu', sans-serif; font-size: 16px; color: #96D52B; font-weight: bold;">ХАХАШКА</div>
               `;
-
-              // Загружаем случайную картинку для "Joke"
-              fetch("images_ha.json")
-                .then(res => res.json())
-                .then(images => {
-                  const randomImage = images[Math.floor(Math.random() * images.length)];
-                  // Используем временный контейнер и onload для #giftImg
-                  const tempContainer = document.createElement("div");
-                  tempContainer.innerHTML = resultHTML;
-                  const waitForGiftImg = tempContainer.querySelector('#giftImg');
-                  if (waitForGiftImg) {
-                    waitForGiftImg.onload = () => {
-                      resultContent.innerHTML = tempContainer.innerHTML;
-                      const closeResultImg = document.getElementById("resultContent").querySelector('#closeResult');
-                      if (closeResultImg) {
-                        closeResultImg.style.display = "none";
-                      }
-                      document.getElementById("resultOverlay").style.display = "block";
-                      resultFrame.style.display = "block";
-                      resultFrame.style.background = "#1F2C29";
-                      resultFrame.style.color = "white";
-                      if (closeResultImg) {
-                        setTimeout(() => {
-                          closeResultImg.style.display = "block";
-                        }, 3000);
-                        closeResultImg.addEventListener("click", () => {
-                          document.getElementById("resultOverlay").style.display = "none";
-                          document.getElementById("resultText").style.display = "none";
-                          location.reload();
-                        });
-                      }
-                    };
-                    waitForGiftImg.src = randomImage;
-                  } else {
-                    resultContent.innerHTML = tempContainer.innerHTML;
-                    document.getElementById("resultOverlay").style.display = "block";
-                    resultFrame.style.display = "block";
-                    resultFrame.style.background = "#1F2C29";
-                    resultFrame.style.color = "white";
-                    // Назначаем обработчик закрытия после вставки innerHTML
-                    const closeResultImg = document.getElementById("resultContent").querySelector('#closeResult');
-                    if (closeResultImg) {
-                      closeResultImg.addEventListener("click", () => {
-                        document.getElementById("resultOverlay").style.display = "none";
-                        document.getElementById("resultText").style.display = "none";
-                        location.reload(); // обновить страницу
-                      });
-                    }
-                  }
-                })
-                .catch(err => {
-                  console.error("Ошибка загрузки images_ha.json:", err);
-                });
             }
             // resultContent.innerHTML = resultHTML;
             // document.getElementById("resultOverlay").style.display = "block";
